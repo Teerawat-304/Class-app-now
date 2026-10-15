@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TeacherScoreController extends Controller
 {
-    public function edit(string $subject_code)
+    public function edit(Request $request, string $subject_code)
     {
         $teacher = Auth::guard('teacher')->user();
-        $semester = $this->currentSemester();
+        $semester = $request->query('semester', $this->currentSemester());
 
         $subject = Subject::where('subject_code', $subject_code)->firstOrFail();
 
@@ -66,7 +66,9 @@ class TeacherScoreController extends Controller
             $updated++;
         }
 
-        return redirect()->route('teacher.scores.edit', $subject_code)
+        $semester = $request->input('semester', $this->currentSemester());
+
+        return redirect()->route('teacher.scores.edit', ['subject_code' => $subject_code, 'semester' => $semester])
             ->with('success', "บันทึกคะแนนเรียบร้อยแล้ว ({$updated} รายการ)");
     }
 
@@ -108,10 +110,10 @@ class TeacherScoreController extends Controller
         $term = ($month >= 6 && $month <= 10) ? '1' : (($month >= 11 || $month <= 3) ? '2' : '3');
         return "{$term}/{$buddhistYear}";
     }
-    public function summary(string $subject_code)
+    public function summary(Request $request, string $subject_code)
 {
     $teacher = Auth::guard('teacher')->user();
-    $semester = $this->currentSemester();
+    $semester = $request->query('semester', $this->currentSemester());
 
     $subject = Subject::where('subject_code', $subject_code)->firstOrFail();
 

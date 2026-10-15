@@ -21,12 +21,12 @@ class StudentDashboardController extends Controller
         'D' => 1.0,
         'F' => 0.0,
     ];
-    public function index()
+    public function index(Request $request)
     {
         $student = Auth::guard('student')->user();
-        $currentSemester = $this->currentSemester();
+        $currentSemester = $request->query('semester', $this->currentSemester());
 
-        // วิชาที่ลงทะเบียนในภาคเรียนปัจจุบัน
+        // วิชาที่ลงทะเบียนในภาคเรียนที่เลือก
         $currentRegister = Register::with(['details.subject', 'details.teacher'])
             ->where('student_id', $student->student_id)
             ->where('semester', $currentSemester)

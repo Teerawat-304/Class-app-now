@@ -51,9 +51,13 @@ class FacultyController extends Controller
     public function deleteFaculty($id)
     {
         $faculty = Faculty::findOrFail($id);
-        $faculty->delete();
 
-        return redirect('faculties')->with('success', 'Faculty deleted successfully!');
+        try {
+            $faculty->delete();
+            return redirect('faculties')->with('success', 'ลบข้อมูลคณะเรียบร้อยแล้ว');
+        } catch (\Exception $e) {
+            return redirect('faculties')->with('error', 'ไม่สามารถลบข้อมูลคณะได้ เนื่องจากยังมีสาขาวิชา อาจารย์ หรือนักศึกษาผูกกับคณะนี้อยู่');
+        }
     }
 
     public function editFaculty($id)

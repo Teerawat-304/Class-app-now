@@ -86,9 +86,13 @@ class ProgramController extends Controller
     public function deleteProgram($id)
     {
         $program = Program::findOrFail($id);
-        $program->delete();
 
-        return redirect('programs')->with('success', 'Program deleted successfully!');
+        try {
+            $program->delete();
+            return redirect('programs')->with('success', 'ลบข้อมูลสาขาวิชาเรียบร้อยแล้ว');
+        } catch (\Exception $e) {
+            return redirect('programs')->with('error', 'ไม่สามารถลบข้อมูลสาขาวิชาได้ เนื่องจากยังมีอาจารย์ หรือนักศึกษาผูกกับสาขาวิชานี้อยู่');
+        }
     }
 
     public function editProgram($id)

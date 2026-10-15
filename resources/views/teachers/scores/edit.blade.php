@@ -35,14 +35,44 @@
 </head>
 <body>
     <div class="topbar">
-        <div class="topbar-content">
-            <a href="{{ route('teacher.dashboard') }}" class="back-link mb-2 d-inline-block">
-                <i class="bi bi-arrow-left"></i> กลับหน้าหลัก
-            </a>
-            <h5 class="mb-0 fw-bold mt-1">
-                <i class="bi bi-journal-check me-2"></i>{{ $subject->subject_code }} — {{ $subject->subject_name }}
-            </h5>
-            <small class="opacity-85">ภาคเรียน {{ $semester }} • หน่วยกิต {{ $subject->credit }}</small>
+        <div class="topbar-content d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <a href="{{ route('teacher.dashboard', ['semester' => $semester]) }}" class="back-link mb-2 d-inline-block">
+                    <i class="bi bi-arrow-left"></i> กลับหน้าหลัก
+                </a>
+                <h5 class="mb-0 fw-bold mt-1">
+                    <i class="bi bi-journal-check me-2"></i>{{ $subject->subject_code }} — {{ $subject->subject_name }}
+                </h5>
+                <small class="opacity-85">หน่วยกิต {{ $subject->credit }}</small>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="opacity-85 small text-white">ภาคเรียน:</span>
+                <form method="GET" action="{{ route('teacher.scores.edit', $subject->subject_code) }}" id="editSemForm">
+                    <select name="semester" class="form-select form-select-sm rounded-pill border-0 shadow-sm px-3" 
+                            style="background:#fff; color:#92400e; font-weight:600; cursor:pointer;"
+                            onchange="document.getElementById('editSemForm').submit()">
+                        @php
+                            $bYear = now()->year + 543;
+                            $availableSemesters = [
+                                "1/{$bYear}",
+                                "2/{$bYear}",
+                                "3/{$bYear}",
+                                "1/" . ($bYear - 1),
+                                "2/" . ($bYear - 1),
+                            ];
+                        @endphp
+                        @foreach($availableSemesters as $semOption)
+                            <option value="{{ $semOption }}" {{ $semester == $semOption ? 'selected' : '' }}>
+                                ภาคเรียนที่ {{ $semOption }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+                <a href="{{ route('teacher.scores.summary', ['subject_code' => $subject->subject_code, 'semester' => $semester]) }}" 
+                   class="btn btn-light btn-sm rounded-pill px-3 ms-2">
+                    <i class="bi bi-bar-chart-fill me-1"></i> สรุปผล
+                </a>
+            </div>
         </div>
     </div>
 
@@ -60,6 +90,7 @@
             @else
                 <form method="POST" action="{{ route('teacher.scores.update', $subject->subject_code) }}">
                     @csrf
+                    <input type="hidden" name="semester" value="{{ $semester }}">
                     <div class="table-responsive">
                         <table class="table align-middle">
                             <thead class="text-muted small">

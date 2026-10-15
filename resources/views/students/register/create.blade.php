@@ -59,7 +59,30 @@
                     <i class="bi bi-arrow-left me-1"></i> กลับหน้าหลัก
                 </a>
                 <h4 class="mb-0 fw-bold mt-1"><i class="bi bi-pencil-square me-2"></i>ลงทะเบียนเรียน</h4>
-                <small class="opacity-85">ภาคเรียนที่ {{ $semester }}</small>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                    <span class="opacity-85 small">เลือกภาคเรียน:</span>
+                    <form method="GET" action="{{ route('student.course_register.create') }}" id="semesterForm">
+                        <select name="semester" class="form-select form-select-sm rounded-pill border-0 shadow-sm px-3" 
+                                style="background:#fff; color:#1e40af; font-weight:600; cursor:pointer;"
+                                onchange="document.getElementById('semesterForm').submit()">
+                            @php
+                                $bYear = now()->year + 543;
+                                $availableSemesters = [
+                                    "1/{$bYear}",
+                                    "2/{$bYear}",
+                                    "3/{$bYear}",
+                                    "1/" . ($bYear - 1),
+                                    "2/" . ($bYear - 1),
+                                ];
+                            @endphp
+                            @foreach($availableSemesters as $semOption)
+                                <option value="{{ $semOption }}" {{ $semester == $semOption ? 'selected' : '' }}>
+                                    ภาคเรียนที่ {{ $semOption }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
             <a href="{{ route('student.course_register.history') }}" class="btn btn-light btn-sm rounded-pill px-3">
                 <i class="bi bi-clock-history me-1"></i> ประวัติการลงทะเบียน

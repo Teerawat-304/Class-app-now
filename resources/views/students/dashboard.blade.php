@@ -104,7 +104,29 @@
                     </div>
                 </div>
             </div>
-            <span class="badge-pill-soft"><i class="bi bi-calendar3 me-1"></i>ภาคเรียนปัจจุบัน {{ $currentSemester }}</span>
+            <div class="d-flex align-items-center gap-2">
+                <form method="GET" action="{{ route('student.dashboard') }}" id="dashboardSemForm">
+                    <select name="semester" class="form-select form-select-sm rounded-pill border shadow-sm px-3" 
+                            style="background:#f8fafc; color:#1e40af; font-weight:600; cursor:pointer;"
+                            onchange="document.getElementById('dashboardSemForm').submit()">
+                        @php
+                            $bYear = now()->year + 543;
+                            $availableSemesters = [
+                                "1/{$bYear}",
+                                "2/{$bYear}",
+                                "3/{$bYear}",
+                                "1/" . ($bYear - 1),
+                                "2/" . ($bYear - 1),
+                            ];
+                        @endphp
+                        @foreach($availableSemesters as $semOption)
+                            <option value="{{ $semOption }}" {{ $currentSemester == $semOption ? 'selected' : '' }}>
+                                ภาคเรียนที่ {{ $semOption }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
         </div>
 
         {{-- Stat cards --}}

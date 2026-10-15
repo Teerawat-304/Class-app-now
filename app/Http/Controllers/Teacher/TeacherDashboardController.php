@@ -10,10 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class TeacherDashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $teacher = Auth::guard('teacher')->user();
-        $semester = $this->currentSemester();
+        $semester = $request->query('semester', $this->currentSemester());
 
         // วิชาที่ตนเองสอน (ทุกวิชาที่ผูกไว้ใน subject_teacher)
         $mySubjects = SubjectTeacher::with('subject')

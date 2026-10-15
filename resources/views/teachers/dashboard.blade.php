@@ -44,7 +44,30 @@
         <div class="topbar-content">
             <div>
                 <h5 class="mb-0 fw-bold"><i class="bi bi-person-workspace me-2"></i>{{ $teacher->teacher_name }}</h5>
-                <small class="opacity-85">ภาคเรียนปัจจุบัน {{ $semester }}</small>
+                <div class="d-flex align-items-center gap-2 mt-2">
+                    <span class="opacity-85 small">เลือกภาคเรียน:</span>
+                    <form method="GET" action="{{ route('teacher.dashboard') }}" id="teacherSemForm">
+                        <select name="semester" class="form-select form-select-sm rounded-pill border-0 shadow-sm px-3" 
+                                style="background:#fff; color:#92400e; font-weight:600; cursor:pointer;"
+                                onchange="document.getElementById('teacherSemForm').submit()">
+                            @php
+                                $bYear = now()->year + 543;
+                                $availableSemesters = [
+                                    "1/{$bYear}",
+                                    "2/{$bYear}",
+                                    "3/{$bYear}",
+                                    "1/" . ($bYear - 1),
+                                    "2/" . ($bYear - 1),
+                                ];
+                            @endphp
+                            @foreach($availableSemesters as $semOption)
+                                <option value="{{ $semOption }}" {{ $semester == $semOption ? 'selected' : '' }}>
+                                    ภาคเรียนที่ {{ $semOption }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
             </div>
             <div class="d-flex gap-2">
                 <a href="{{ route('teacher.history') }}" class="btn btn-light btn-sm rounded-pill px-3">
@@ -78,13 +101,13 @@
                     </span>
                 </div>
                 <div>
-                    <a href="{{ route('teacher.scores.summary', $st->subject_code) }}"
+                    <a href="{{ route('teacher.scores.summary', ['subject_code' => $st->subject_code, 'semester' => $semester]) }}"
                        class="btn btn-sm rounded-pill px-3 btn-outline-secondary"
                        style="background:#d97706;color:#fff;">
                         <i class="bi bi-bar-chart-fill me-1"></i> สรุปผล
                     </a>
 
-                    <a href="{{ route('teacher.scores.edit', $st->subject_code) }}"
+                    <a href="{{ route('teacher.scores.edit', ['subject_code' => $st->subject_code, 'semester' => $semester]) }}"
                        class="btn btn-sm rounded-pill px-3" style="background:#d97706;color:#fff;">
                         <i class="bi bi-pencil-square me-1"></i> ดูรายชื่อ / กรอกคะแนน
                     </a>

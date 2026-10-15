@@ -137,15 +137,20 @@ class TeacherController extends Controller
 
     public function destroy($teacher_id)
     {
-        // ตรวจสอบ FK ก่อนลบ ถ้ามีตารางอื่นอ้างอิง teacher_id (เช่น subject ที่สอน)
-        // if ($teacher->subjects()->exists()) {
-        //     return back()->with('error', 'ไม่สามารถลบได้ เนื่องจากมีข้อมูลรายวิชาที่ผูกกับอาจารย์คนนี้อยู่');
-        // }
-
         $teacher = Teacher::findOrFail($teacher_id);
-        $teacher->delete();
 
-        return redirect('teachers')
-            ->with('success', 'ลบข้อมูลอาจารย์เรียบร้อยแล้ว');
+        $hasAssignments = DB::table('subject_teacher')->where('teacher_id', $teacher_id)->exists();
+        $hasScores = DB::table('register_detail')->where('teacher_id', $teacher_id)->exists();
+
+        if ($hasAssignments || $hasScores) {
+            return redirect('teachers')->with('error', "ไม่สามารถลบอาจารย์ {$teacher->teacher_name} ได้ เนื่องจากมีรายวิชาที่สอนหรือมีประวัติการให้คะแนนนักศึกษาอยู่ในระบบ");
+        }
+
+        try {
+            $teacher->delete();
+            return redirect('teachers')->with('success', 'ลบข้อมูลอาจารย์เรียบร้อยแล้ว');
+        } catch (\Exception $e) {
+            return redirect('teachers')->with('error', 'ไม่สามารถลบข้อมูลอาจารย์ได้ เนื่องจากมีข้อมูลที่เกี่ยวข้องอยู่ในระบบ');
+        }
     }
 }
