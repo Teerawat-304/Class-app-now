@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 15, 2026 at 05:50 PM
+-- Generation Time: Oct 15, 2026 at 07:04 PM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.30
 
@@ -202,7 +202,9 @@ INSERT INTO `register` (`register_id`, `register_date`, `student_id`, `semester`
 (1, '2026-09-21', '16732011', '1/2569'),
 (2, '2026-09-21', '16732012', '1/2569'),
 (3, '2026-10-15', '16732000', '1/2569'),
-(4, '2026-10-15', '16732072', '1/2569');
+(4, '2026-10-15', '16732072', '1/2569'),
+(5, '2026-10-15', '16732114', '1/2569'),
+(6, '2026-10-15', '16732072', '2/2569');
 
 -- --------------------------------------------------------
 
@@ -234,7 +236,15 @@ INSERT INTO `registerr_detail` (`detail_id`, `register_id`, `subject_code`, `tea
 (5, 4, '110', 15456625, 0, 0, 0, 0, ''),
 (6, 4, 'cs105', 15456631, 20, 15, 25, 60, 'C'),
 (7, 4, '109', 15456621, 0, 0, 0, 0, ''),
-(8, 4, 'CS1003', 15456631, 15, 20, 25, 60, 'C');
+(8, 4, 'CS1003', 15456631, 15, 20, 25, 60, 'C'),
+(9, 5, 'cs105', 15456631, 25, 10, 30, 65, 'C+'),
+(10, 5, '110', 15456631, 20, 15, 20, 55, 'D+'),
+(11, 5, 'CS1003', 15456631, 20, 25, 20, 65, 'C+'),
+(12, 6, 'cs105', 15456631, 20, 20, 20, 60, 'C'),
+(13, 6, '109', 15456631, 20, 20, 40, 80, 'A'),
+(14, 6, '110', 15456631, 21, 23, 40, 84, 'A'),
+(15, 6, 'CS1016', 15456631, 30, 24, 28, 82, 'A'),
+(16, 6, 'CS1003', 15456631, 30, 20, 25, 75, 'B+');
 
 -- --------------------------------------------------------
 
@@ -256,7 +266,7 @@ CREATE TABLE `sessions` (
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('nS23a69xfiDKUMxC64F5NmiSTqjavUhOLvzNKnBX', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.142.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36', 'eyJfdG9rZW4iOiJNcFdLZncxTGVLTXA4bjlKR2UzYURCYlA0Q2tEWEtJRDcwYmk0S2s2IiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL3N0dWRlbnRcL2dyYWRlcyIsInJvdXRlIjoic3R1ZGVudC5ncmFkZXMifSwibG9naW5fc3R1ZGVudF81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjoiMTY3MzIwNzIifQ==', 1792086528);
+('gZ7E0pFxHqOQ41O9oIVR2SDCz2oEiWbxqwQ1EJLm', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Code/1.142.0 Chrome/150.0.7871.250 Electron/43.7.7 Safari/537.36', 'eyJfdG9rZW4iOiJxQVZEU2lDNG5oZEt1NVNMenp6TUlHcERENXUwNnFybFdYODA1V1RSIiwiX2ZsYXNoIjp7Im5ldyI6W10sIm9sZCI6W119LCJfcHJldmlvdXMiOnsidXJsIjoiaHR0cDpcL1wvMTI3LjAuMC4xOjgwMDBcL3N0dWRlbnRcL2Rhc2hib2FyZCIsInJvdXRlIjoic3R1ZGVudC5kYXNoYm9hcmQifSwibG9naW5fc3R1ZGVudF81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjoiMTY3MzIwNzIifQ==', 1792090425);
 
 -- --------------------------------------------------------
 
@@ -287,7 +297,8 @@ INSERT INTO `students` (`id`, `student_name`, `student_id`, `faculty_id`, `progr
 (7, 'พุฒิชัย', '16732011', '106', 'CS103', '2005-03-31', '16732011@aru.ac.th', '47/1', 'Ton', '$2y$12$apz4hAXETgpLcFAWJgzDrOCTbK3wiMfjFi3Fk3VTF/XGMrA1pEO2O', '2026-09-13 19:00:26', '2026-10-14 19:51:13'),
 (8, 'นาย ภูผา', '16732012', '106', 'CS103', '2005-03-11', 'phonebell444@gmail.com', '47/1', 'aum', '$2y$12$PIJK5WQvhCv/VQl7/mxfNut74g/QRotviu2ew2aXVt5CsPuKVZLXO', '2026-09-20 21:13:39', '2026-09-20 21:16:31'),
 (9, 'ชัย', '16732000', '106', 'CS103', '2005-03-31', '16732000@aru.ac.th', '47/1', 'Lom', '$2y$12$dtPrr6o62XH9vpfVGcT6feeCfQnR5wIb0mAN59ivJJ9VgfkCJfMaC', '2026-10-14 19:57:00', '2026-10-15 10:26:35'),
-(10, 'นายธีรวัจน์ นุฤทธิ์จิรยศ', '16732072', '106', 'CS103', '2005-06-21', '16732072@aru.ac.th', 'Ayuthaya', 'Teerawat', '$2y$12$tR6/TVfJ3U3liprEzzVsNu.SFN5apojIFxgA.hfm1Ch20Ii/B0UMW', '2026-10-15 10:12:33', '2026-10-15 10:12:33');
+(10, 'นายธีรวัจน์ นุฤทธิ์จิรยศ', '16732072', '106', 'CS103', '2005-06-21', '16732072@aru.ac.th', 'Ayuthaya', 'Teerawat', '$2y$12$tR6/TVfJ3U3liprEzzVsNu.SFN5apojIFxgA.hfm1Ch20Ii/B0UMW', '2026-10-15 10:12:33', '2026-10-15 10:12:33'),
+(11, 'นาย นนท์', '16732114', '106', 'CS103', '2005-06-21', '16732114@aru.ac.th', 'Ayuthaya', 'Arnon', '$2y$12$AhSUx153zyDd4nw3tEwjN.X7YfoECq9T/jVniVH.b9/6Khm2m0yze', '2026-10-15 11:03:11', '2026-10-15 11:03:11');
 
 -- --------------------------------------------------------
 
@@ -559,19 +570,19 @@ ALTER TABLE `program`
 -- AUTO_INCREMENT for table `register`
 --
 ALTER TABLE `register`
-  MODIFY `register_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `register_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `registerr_detail`
 --
 ALTER TABLE `registerr_detail`
-  MODIFY `detail_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `detail_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `subject_teacher`
